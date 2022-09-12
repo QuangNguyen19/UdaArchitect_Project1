@@ -1,0 +1,27 @@
+About RTO and RPO for a single AZ outage: 
+Because there exists synchronous replication in case of multi AZ deployments. Whenever one AZ fails, automatic failover takes place. RTO and RPO are very less in this case.
+    
+About RTO and RPO for single region outage in multi-region deployment
+If one region fails, we have to promote the read replica to take place of master database. This requires manual intervention. Also, there exists asynchronous replication in this case. Thus, RTO and RPO are slightly greater in this case depend on how fast we react to this problem.
+
+RTO - Example:
+        ◦ 00:00 - Problem happens (0 minutes) 
+        ◦ 00:05 - An amount of time passes before an alert triggers (5 minutes) 
+        ◦ 00:06 - Alert triggers on-all staff (1 minute) 
+        ◦ 00:16 - On-call staff may need to get out of bed, get to computer, log in, log onto VPN (15 minutes) 
+        ◦ 00:26 - On-call staff starts diagnosing issue (15 minutes) 
+        ◦ 00:41 - Root cause is discovered (15 minutes) 
+        ◦ 00:46 - Remediation started (5 minutes) :  Promote secondary instance to be the new master and then route the traffic to the new endpoint
+        ◦ 00:56 - Remediation completed (10 minutes) 
+       Total time: 66 minutes 
+
+  
+RPO:
+If we set up an RDS database with automatic backups enabled, the RPO will be based on how often data is backed up. 
+For exampleL: if we set up a backup every 2 hours, the minimun RPO will be 2 hours.
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+Description: 'RDS-subnet-group'
+
+Parameters:
+  EnvironmentNameOutput:
+    Description: An environment name of out put that will be used to add prefix for out put of resources after created
+    Default: "vpc-secondary-output"
+    Type: String
+
+
+AWSTemplateFormatVersion: "2010-09-09"
+Resources: 
+  primarySubnetGroup: 
+    Properties: 
+      DBSubnetGroupDescription: RDS-subnets-group
+      SubnetIds: 
+        - Fn::ImportValue:
+           !Sub "${EnvironmentNameOutput}-PRIV-SUBNET-1"
+        - Fn::ImportValue:
+           !Sub "${EnvironmentNameOutput}-PRIV-SUBNET-2"
+    Type: "AWS::RDS::DBSubnetGroup"
+
